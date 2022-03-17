@@ -17,8 +17,8 @@ int main(int argc,char *argv[]){
 	char nolls[80]="";
 	char bufs[2080];
 	if (argc<2)exit(0);
-	int fd = shm_open(shmp,O_RDWR ,0);
-	if (fd!=-1)exit(1);
+	int fd = shm_open(argv[1],O_RDWR ,0);
+	if (fd==-1)exit(1);
 	if (ftruncate(fd,sizeof(struct shm))==-1)exit(1);
 	struct shm *shm1=(struct shm*)mmap(NULL,sizeof(*shm1),PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
 	if (shm1!=MAP_FAILED){

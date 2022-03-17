@@ -13,7 +13,7 @@ struct shm{
 	size_t lens;
 };
 int main(){
-	char shmp[80]="hello1";
+	char shmp[80]="hello10";
 	char nolls[80]="---------";
 	char runs[80];
     int i=-1;
@@ -25,7 +25,6 @@ int main(){
     if (fbfd == -1) exit(1);
     if ((int)fbp == -1)exit(1);
 	int fd = shm_open(shmp,O_CREAT | O_EXCL | O_RDWR,S_IRUSR | S_IWUSR);
-	puts("start father");
 	if (fd!=-1){
 		if (ftruncate(fd,sizeof(struct shm))!=-1){
 			struct shm *shm1=(struct shm*)mmap(NULL,sizeof(*shm1),PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
@@ -37,6 +36,7 @@ int main(){
 				strcat(runs,shmp);
 				strcat(runs," & ");
 				system(runs);
+				puts(runs);
 				windowsRefresh();
 				while(1){
 					if(getc(stdin)==27)break;
@@ -47,9 +47,9 @@ int main(){
 			}
 		}
 	}
-	exitWindow();
 	endX(fbfd);
 	puts("exit father");
 	shm_unlink(shmp);
+	exitWindow();
 	return 0;
 }
