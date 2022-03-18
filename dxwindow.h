@@ -57,13 +57,14 @@ int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b){
 	}else{
 		www=-1;
 	}
+	return www;
 }
 void exitWindow(){
 	int n;
 	for(n=0;n<wcount;n++){
-		if(win[n].dc!=NULL)free(win[n].dc);
+		if(win[n].dc!=NULL && n<wcount)free(win[n].dc);
 	}
-	if(curs.cursor!=NULL)free(curs.cursor);
+	//if(curs.cursor!=NULL)free(curs.cursor);
 }
 void drawCursor(){
 	ball(curs.x+16,curs.y+16,3,128,128,128);
