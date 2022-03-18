@@ -1,6 +1,12 @@
 #include "directX.h"
 #define maxw 32
 int fbfd;
+#define shmp "Xwindows"
+struct shm{
+	int sem1;
+	int sem2;
+	size_t lens;
+};
 struct windows{
 	char *title;
 	int *dc;
@@ -11,6 +17,7 @@ struct windows{
 	int r;
 	int g;
 	int b;
+	char wc[80];
 };
 struct cursors{
 	int x;
@@ -49,12 +56,20 @@ int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b){
 		win[wcount].r=r;
 		win[wcount].g=g;
 		win[wcount].b=b;
-		win[wcount].dc=creatImage(w,h);
 		if(w>vinfo.xres-1)win[wcount].w=vinfo.xres-1;
 		if(w>vinfo.yres-1)win[wcount].h=vinfo.yres-1;
 		zorder[wcount]=wcount;
+		sprintf(win[wcount].wc,"%s%d",shmp,wcount);
+		int fd = shm_open(win[wcount].wc,O_CREAT | O_EXCL | O_RDWR,S_IRUSR | S_IWUSR);
+		if (fd==-1)return -1;
+		if (ftruncate(fd,(w*h)*(sizeof(int))+50)==-1)return -1;
+		win[wcount].dc=(int*)mmap(NULL,(w*h)*(sizeof(int))+50,PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
+		if (win[wcount].dc==MAP_FAILED)return -1;
+		win[wcount].dc[0]=w;
+		win[wcount].dc[1]=h;
+		win[wcount].dc[2]=32;
 		drawWindow(win[wcount].title,win[wcount].dc,win[wcount].x,win[wcount].y,win[wcount].w,win[wcount].h,win[wcount].r,win[wcount].g,win[wcount].b);
-		wcount++;
+		if (www!=-1)wcount++;
 	}else{
 		www=-1;
 	}
@@ -63,7 +78,7 @@ int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b){
 void exitWindow(){
 	int n;
 	for(n=0;n<wcount;n++){
-		if(win[n].dc!=NULL && n<wcount)free(win[n].dc);
+		if(win[n].dc!=NULL && n<wcount)	shm_unlink(win[n].wc);
 	}
 	if(curs.cursor!=NULL)free(curs.cursor);
 }

@@ -7,14 +7,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include "dxwindow.h"
-struct shm{
-	int sem1;
-	int sem2;
-	size_t lens;
-};
 int main(int argc,char *argv[]){
-	char shmp[80]="hello1";
-	char nolls[80]="";
 	char bufs[2080];
 	if (argc<2)exit(0);
 	int fd = shm_open(argv[1],O_RDWR ,0);
