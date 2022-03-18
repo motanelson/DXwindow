@@ -14,16 +14,15 @@ struct shm{
 };
 int main(){
 	char shmp[80]="hello10";
-	char nolls[80]="---------";
-	char runs[80];
+	char application[80]="./shm2 ";
+	char *shmpshmp=shmp;
+    char *aapplication=application;
     int i=-1;
     char cc[2080];
     char *ccc;
     int n=0;
 	int ii;
-    int fbfd = startX(nolls);
-    if (fbfd == -1) exit(1);
-    if ((int)fbp == -1)exit(1);
+	startwin();
 	int fd = shm_open(shmp,O_CREAT | O_EXCL | O_RDWR,S_IRUSR | S_IWUSR);
 	if (fd!=-1){
 		if (ftruncate(fd,sizeof(struct shm))!=-1){
@@ -32,11 +31,7 @@ int main(){
 				newWindow(ccc,20,20,200,200,100,100,100);
 				shm1->sem1=0;
 				shm1->sem2=0;
-				strcpy(runs,"./shm2 ");
-				strcat(runs,shmp);
-				strcat(runs," & ");
-				system(runs);
-				puts(runs);
+				runs(aapplication,shmpshmp);
 				windowsRefresh();
 				while(1){
 					if(getc(stdin)==27)break;
