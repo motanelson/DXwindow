@@ -1,7 +1,7 @@
 #include "directX.h"
 #define maxw 32
 int fbfd;
-#define shmp "Xwindows"
+#define shmp "XXXIIIXwindows"
 struct shm{
 	int sem1;
 	int sem2;
@@ -18,6 +18,7 @@ struct windows{
 	int g;
 	int b;
 	char wc[80];
+	int *shms;
 };
 struct cursors{
 	int x;
@@ -63,8 +64,9 @@ int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b){
 		int fd = shm_open(win[wcount].wc,O_CREAT | O_EXCL | O_RDWR,S_IRUSR | S_IWUSR);
 		if (fd==-1)return -1;
 		if (ftruncate(fd,(w*h)*(sizeof(int))+50)==-1)return -1;
-		win[wcount].dc=(int*)mmap(NULL,(w*h)*(sizeof(int))+50,PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
-		if (win[wcount].dc==MAP_FAILED)return -1;
+		win[wcount].shms=(int*)mmap(NULL,(w*h)*(sizeof(int))+50,PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
+		if (win[wcount].shms==MAP_FAILED)return -1;
+		win[wcount].dc=win[wcount].shms+25;
 		win[wcount].dc[0]=w;
 		win[wcount].dc[1]=h;
 		win[wcount].dc[2]=32;

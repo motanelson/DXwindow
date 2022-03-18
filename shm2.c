@@ -12,11 +12,11 @@ int main(int argc,char *argv[]){
 	if (argc<2)exit(0);
 	int fd = shm_open(argv[1],O_RDWR ,0);
 	if (fd==-1)exit(1);
-	if (ftruncate(fd,sizeof(struct shm))==-1)exit(1);
-	struct shm *shm1=(struct shm*)mmap(NULL,sizeof(*shm1),PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
+	if (ftruncate(fd,(200*200)*(sizeof(int))+50)==-1)exit(1);
+	int *shm1=(int*)mmap(NULL,(200*200)*(sizeof(int))+50,PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
 	if (shm1!=MAP_FAILED){
 		while(1){
-			if(shm1->sem1==1)break;
+			if(shm1[0]==1)break;
 		}
 	}
 	puts("exit son");
