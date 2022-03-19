@@ -24,7 +24,7 @@ int main(int argc,char *argv[]){
 			if(shm1[flagend]==1)break;
 		}
 	}
-	puts("exit son");
+	printf("%s\n",argv[1]);
 	shm_unlink(shmp);
 	return 0;
 }

@@ -18,10 +18,12 @@ int main(){
     int n=0;
 	int ii;
 	startwin();
-	ww1=newWindow(ddhmp,20,20,winsw,winsh,100,100,100,aapplication);
+	for (n=0;n<4;n++){
+		ww1=newWindow(ddhmp,n*20,n*20,winsw,winsh,100,100,100,aapplication);
+	}
 				if(ww1!=-1){
 					while(1){
-						if(win[0].shms[flagrefresh]==1)break;
+						if(win[0].shms[flagrefresh]==1 && win[1].shms[flagrefresh]==1 && win[2].shms[flagrefresh]==1 && win[3].shms[flagrefresh]==1)break;
 					}
 					windowsRefresh();
 					while(1){
@@ -29,10 +31,14 @@ int main(){
 						i=redrawCursor();
 					}
 					win[0].shms[flagend]=1;
+					win[1].shms[flagend]=1;
+					win[2].shms[flagend]=1;
+					win[3].shms[flagend]=1;
 					sleep(4);
 				}
+	
 	endX(fbfd);
-	puts("exit father");
+	puts("exit windows gest");
 	exitWindow();
 	return 0;
 }
