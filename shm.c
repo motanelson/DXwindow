@@ -29,7 +29,11 @@ int main(){
 					while(1){
 						if(getc(stdin)==27)break;
 						i=redrawCursor();
+						if(i!=-1){
+						moveTop(i);
+						windowsRefresh();
 					}
+	}
 					win[0].shms[flagend]=1;
 					win[1].shms[flagend]=1;
 					win[2].shms[flagend]=1;
