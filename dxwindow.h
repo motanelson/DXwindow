@@ -1,15 +1,12 @@
 #include "directX.h"
 #define maxw 32
-#define flagend 1
+#define flagend 0
+#define flagrefresh 1
 #define winsw 200
 #define winsh 200
+#define shmhead 25
 int fbfd;
-#define shmp "XXXIIIXwindows"
-struct shm{
-	int sem1;
-	int sem2;
-	size_t lens;
-};
+#define shmp "XXIIIXwindows"
 struct windows{
 	char *title;
 	int *dc;
@@ -78,7 +75,7 @@ int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b,char *aapp
 		if (ftruncate(fd,(w*h)*(sizeof(int))+50)==-1)return -1;
 		win[wcount].shms=(int*)mmap(NULL,(w*h)*(sizeof(int))+50,PROT_WRITE | PROT_READ ,MAP_SHARED,fd,0);
 		if (win[wcount].shms==MAP_FAILED)return -1;
-		win[wcount].dc=win[wcount].shms+25;
+		win[wcount].dc=win[wcount].shms+shmhead;
 		win[wcount].dc[0]=w;
 		win[wcount].dc[1]=h;
 		win[wcount].dc[2]=32;

@@ -19,8 +19,10 @@ int main(){
 	int ii;
 	startwin();
 	ww1=newWindow(ddhmp,20,20,winsw,winsh,100,100,100,aapplication);
-				
 				if(ww1!=-1){
+					while(1){
+						if(win[0].shms[flagrefresh]==1)break;
+					}
 					windowsRefresh();
 					while(1){
 						if(getc(stdin)==27)break;
