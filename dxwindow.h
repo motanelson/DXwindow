@@ -1,5 +1,8 @@
 #include "directX.h"
 #define maxw 32
+#define flagend 1
+#define winsw 200
+#define winsh 200
 int fbfd;
 #define shmp "XXXIIIXwindows"
 struct shm{
@@ -46,7 +49,16 @@ void drawWindow(char *title,int *dc,int x,int y,int w, int h,int r,int g, int b)
 	irectangle(0,0,w,h,dc,0,0,0);
 	drawlabel(dc,title,0,0,w,h);
 }
-int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b){
+void runs(char *shells,char *keyss){
+		char runs[80];
+				runs[0]=0;
+				strcat(runs,shells);
+				strcat(runs," ");
+				strcat(runs,keyss);
+				strcat(runs," & ");
+				system(runs);
+}
+int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b,char *aapplication){
 	int www=wcount; 	
 	if(www<maxw-1){
 		win[wcount].title=title;
@@ -71,6 +83,9 @@ int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b){
 		win[wcount].dc[1]=h;
 		win[wcount].dc[2]=32;
 		drawWindow(win[wcount].title,win[wcount].dc,win[wcount].x,win[wcount].y,win[wcount].w,win[wcount].h,win[wcount].r,win[wcount].g,win[wcount].b);
+		win[wcount].shms[flagend]=0;
+		win[wcount].shms[1]=0;
+		runs(aapplication,win[wcount].wc);
 		if (www!=-1)wcount++;
 	}else{
 		www=-1;
@@ -179,14 +194,4 @@ void startwin(){
     if (fbfd == -1) exit(1);
     if ((int)fbp == -1)exit(1);
 }
-void runs(char *shells,char *keyss){
-		char runs[80];
-				runs[0]=0;
-				strcat(runs,shells);
-				strcat(runs," ");
-				strcat(runs,keyss);
-				strcat(runs," & ");
-				system(runs);
-}
-
 
