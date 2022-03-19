@@ -52,7 +52,7 @@ void runs(char *shells,char *keyss){
 				strcat(runs,shells);
 				strcat(runs," ");
 				strcat(runs,keyss);
-				strcat(runs," & ");
+				strcat(runs," 2>/dev/null >/dev/null & ");
 				system(runs);
 }
 int newWindow(char *title,int x,int y,int w, int h,int r,int g, int b,char *aapplication){
