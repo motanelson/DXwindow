@@ -45,7 +45,7 @@ int main(){
 					while(1){
 						if(getc(stdin)==27)break;
 						i=redrawCursor();
-						if(i!=-1){
+						if(i!=-1 && i!=zorder[wcount-1]){
 							moveTop(i);
 							windowRefresh(i);
 						}
