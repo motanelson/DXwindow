@@ -169,6 +169,19 @@ void windowsRefresh(){
 	}
 	showCursor();
 }
+void windowRefresh(int www){
+	int n;
+	int nx;
+	int ny;
+		putImage(curs.x,curs.y,curs.cursor);
+		n=wcount-1;
+		nx=win[zorder[n]].x;
+		ny=win[zorder[n]].y;
+		if(nx+win[zorder[n]].w>vinfo.xres-1)nx=0;
+		if(ny+win[zorder[n]].h>vinfo.yres-1)ny=0;
+		putImage(nx,ny,win[zorder[n]].dc);
+	showCursor();
+}
 void moveTop(int index){
 	int n;
 	int i=-1;

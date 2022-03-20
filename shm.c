@@ -46,10 +46,11 @@ int main(){
 						if(getc(stdin)==27)break;
 						i=redrawCursor();
 						if(i!=-1){
-						moveTop(i);
-						windowsRefresh();
+							moveTop(i);
+							windowRefresh(i);
+						}
 					}
-	}
 				}
+				
 	return 0;
 }
