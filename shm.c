@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <signal.h>
-#include "dxwindow.h"
+#include "control.h"
 void handler(int value){
 	exit(1);
 }
@@ -22,6 +22,7 @@ void onexits(int i,void *arg){
 	exitWindow();
 }
 int main(){
+	int tt;
 	int ww1=-1;
 	char application[80]="./shm2 ";
     char *aapplication=application;
@@ -31,10 +32,13 @@ int main(){
     char *ccc;
     int n=0;
 	int ii;
+	int iii;
 	signal(SIGINT,handler);
 	startwin();
 	for (n=0;n<4;n++){
 		ww1=newWindow(ddhmp,n*20,n*20,winsw,winsh,100,100,100,aapplication);
+		win[n].shms[flagoutput]=-1;
+		win[n].shms[flaginput]=-1;
 	}
 				if(ww1!=-1){
 					on_exit(onexits,(void *)0);
@@ -44,10 +48,28 @@ int main(){
 					windowsRefresh();
 					while(1){
 						if(getc(stdin)==27)break;
+						tt=0;
+						for (n=0;n<4;n++){
+							if(win[n].shms[flaginput]==0){
+								win[n].shms[flaginput]=-1;
+								tt=1;
+								break;
+							}
+						}
+						if(tt==1)break;
 						i=redrawCursor();
-						if(i!=-1 && i!=zorder[wcount-1]){
-							moveTop(i);
-							windowRefresh(i);
+						if(i!=zorder[wcount-1]){
+							if(i!=-1){
+								moveTop(i);
+								windowRefresh(i);
+							}
+						}else{
+							if(i!=-1){
+									win[zorder[wcount-1]].shms[flagoutput+1]=mouseX-win[zorder[wcount-1]].x;
+									win[zorder[wcount-1]].shms[flagoutput+2]=mouseY-win[zorder[wcount-1]].y;
+									win[zorder[wcount-1]].shms[flagoutput]=0;
+								}
+							
 						}
 					}
 				}

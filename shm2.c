@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <signal.h>
-#include "dxwindow.h"
+#include "control.h"
 int *shm1;
 char *argvs;
 void handler(int value){
@@ -18,8 +18,20 @@ void onexits(int i,void *arg){
 	shm_unlink(argvs);
 }
 int main(int argc,char *argv[]){
+	int i;
+	int xx;
+	int yy;
+	label l1;
 	struct windows w1;
 	char bufs[2080];
+	l1.c.x=25;
+	l1.c.y=50;
+	l1.c.h=16;
+	l1.c.w=45;
+	l1.r=100;
+	l1.g=100;
+	l1.b=100;
+	strcpy(l1.caption,"Exit");
 	if (argc<2)exit(0);
 	argvs=(char*)argv[1];
 	signal(SIGINT,handler);
@@ -30,11 +42,22 @@ int main(int argc,char *argv[]){
 	if (shm1!=MAP_FAILED){
 		on_exit(onexits,(void *)0);
 		w1.dc=shm1+shmhead;
-		iline(0,0,winsw,winsh,w1.dc,0,0,0);
-		iline(0,winsh,winsw,0,w1.dc,0,0,0);
+		drawLabels(l1,w1.dc);
+		shm1[flagoutput]=-1;
 		shm1[flagrefresh]=1;
 		while(1){
 			if(shm1[flagend]==1)break;
+			if (shm1[flagoutput]==0){
+				xx=shm1[flagoutput+1];
+				yy=shm1[flagoutput+2];
+				shm1[flagoutput]=-1;
+				if(insides(l1,xx,yy)==1){
+					shm1[flaginput]=0;
+				}
+
+			}
+
+			
 		}
 	}
 	return 0;
