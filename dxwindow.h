@@ -6,7 +6,7 @@
 #define winsh 200
 #define shmhead 25
 int fbfd;
-#define shmp "XXIIIXwindows"
+#define shmp "IIXwindows"
 struct windows{
 	char *title;
 	int *dc;
@@ -120,7 +120,7 @@ int onclick(){
 	int nx;
 	int ny;
 	int rets=-1;
-	for(n=wcount-1;n>0;n--){
+	for(n=wcount-1;n>-1;n--){
 		nx=win[zorder[n]].x;
 		ny=win[zorder[n]].y;
 		if (curs.x1+16>=nx && curs.y1+16>=ny && curs.x1+16<=nx+win[zorder[n]].w && curs.y1+16<=ny+win[zorder[n]].h)return zorder[n];
