@@ -22,6 +22,7 @@ void onexits(int i,void *arg){
 	exitWindow();
 }
 int main(){
+	int nn;
 	int tt;
 	int ww1=-1;
 	char application[80]="./shm2 ";
@@ -40,14 +41,16 @@ int main(){
 	ww1=loadinit(initss);
 				if(ww1!=-1){
 					on_exit(onexits,(void *)0);
-					while(1){
-						if(win[0].shms[flagrefresh]==1 && win[1].shms[flagrefresh]==1 && win[2].shms[flagrefresh]==1 && win[3].shms[flagrefresh]==1)break;
+					for(nn=0;nn<wcount;nn++){
+						while(1){
+							if(win[nn].shms[flagrefresh]==1)break;
+						}
 					}
 					windowsRefresh();
 					while(1){
 						if(getc(stdin)==27)break;
 						tt=0;
-						for (n=0;n<4;n++){
+						for (n=0;n<wcount;n++){
 							if(win[n].shms[flaginput]==0){
 								win[n].shms[flaginput]=-1;
 								tt=1;

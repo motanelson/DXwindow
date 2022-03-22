@@ -11,14 +11,14 @@ int loadinit(char *files){
 	if(f1==NULL)return -1;
 	while(1){
 		fgets(c,2070,f1);
+		if(feof(f1))break;
 		enters=strstr(c,"\n");
 		if(enters!=NULL)enters[0]=0;
 		enters=strstr(c,"\r");
 		if(enters!=NULL)enters[0]=0;
-		ww1=newWindow(aapplication,n*20,n*20,winsw,winsh,100,100,100,aapplication);
+		ww1=newWindow(aapplication,n*20+20,n*20+20,winsw,winsh,100,100,100,aapplication);
 		win[n].shms[flagoutput]=-1;
 		win[n].shms[flaginput]=-1;
-		if(feof(f1))break;
 		n++;
 	}
 	fclose(f1);
