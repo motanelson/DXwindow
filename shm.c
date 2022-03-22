@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <ctype.h>
 #include <signal.h>
-#include "control.h"
+#include "loadinit.h"
 void handler(int value){
 	exit(1);
 }
@@ -25,6 +25,8 @@ int main(){
 	int tt;
 	int ww1=-1;
 	char application[80]="./shm2 ";
+	char initsss[80]="load.ini";
+    char *initss=initsss;
     char *aapplication=application;
     char *ddhmp=application;
     int i=-1;
@@ -35,11 +37,7 @@ int main(){
 	int iii;
 	signal(SIGINT,handler);
 	startwin();
-	for (n=0;n<4;n++){
-		ww1=newWindow(ddhmp,n*20,n*20,winsw,winsh,100,100,100,aapplication);
-		win[n].shms[flagoutput]=-1;
-		win[n].shms[flaginput]=-1;
-	}
+	ww1=loadinit(initss);
 				if(ww1!=-1){
 					on_exit(onexits,(void *)0);
 					while(1){
