@@ -25,7 +25,7 @@ int addsControls(int x,int y,int w,int h,char *caption,int r,int g,int b){
 void drawLabels(label l,int *dc){
 	char caption[100];
 	if(l.c.h<16)l.c.h=16;
-	iboxs(l.c.x,l.c.y,l.c.x+l.c.w,l.c.y+l.c.h,dc,l.r,l.g,l.b);
+	iboxs(l.c.x,l.c.y,l.c.w,l.c.h,dc,l.r,l.g,l.b);
 	irectangle(l.c.x,l.c.y,l.c.x+l.c.w,l.c.y+l.c.h,dc,0,0,0);
 	strcpy(caption,l.caption);
 	int tl=l.c.w/8-1;
