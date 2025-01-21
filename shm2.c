@@ -26,8 +26,8 @@ int main(int argc,char *argv[]){
 	struct windows w1;
 	char bufs[2080];
 	if (argc<2)exit(0);
-	addsControls(25,50,45,16,captions,100,100,100);
-	addsControls(80,50,45,16,captions,100,100,100);
+	addsControls(25,50,45,16,captions,255,255,0);
+	addsControls(80,50,45,16,captions,255,255,0);
 	argvs=(char*)argv[1];
 	signal(SIGINT,handler);
 	int fd = shm_open(argv[1],O_RDWR ,0);

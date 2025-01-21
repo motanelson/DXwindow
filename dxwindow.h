@@ -97,7 +97,7 @@ void exitWindow(){
 	if(curs.cursor!=NULL)free(curs.cursor);
 }
 void drawCursor(){
-	ball(curs.x+16,curs.y+16,3,128,128,128);
+	ball(curs.x+16,curs.y+16,3,255,255,0);
 	circle(curs.x+16,curs.y+16,3,0,0,0);
 }
 void showCursor(){
@@ -201,7 +201,7 @@ void moveTop(int index){
 void startwin(){
 	char nolls[80]=" ";
     fbfd = startX(nolls);
-    if (fbfd == -1) exit(1);
+    if ((int)fbfd == -1) exit(1);
     if ((int)fbp == -1)exit(1);
 }
 

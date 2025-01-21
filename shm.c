@@ -48,7 +48,7 @@ int main(){
 					}
 					windowsRefresh();
 					while(1){
-						if(getc(stdin)==27)break;
+						//if(getc(stdin)==27)break;
 						tt=0;
 						for (n=0;n<wcount;n++){
 							if(win[n].shms[flaginput]==0){
